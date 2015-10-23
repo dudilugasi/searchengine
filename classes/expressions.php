@@ -28,7 +28,8 @@ class notEx extends expression {
     }
 
     public function evaluate() {
-        
+        global $all_docs;
+        return array_diff($all_docs, $this->op->evaluate()["posting"]);
     }
 
 }

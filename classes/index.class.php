@@ -50,8 +50,17 @@ class index {
         
     }
     
-    function get_index() {
-        
+    function get_documents_ids() {
+        global $conn;
+        $sql = "SELECT `docid` FROM `se_documents`";
+        if ($result = $conn->query($sql)) {
+            $ids = array();
+            while ($row = $result->fetch_assoc()) {
+                $ids[$row["docid"]] = 0;
+            }
+            return $ids;
+        }
+        return array();
     }
 
 }

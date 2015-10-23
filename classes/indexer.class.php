@@ -12,6 +12,8 @@ class indexer {
     }
 
     public function index($docs) {
+        ini_set('max_execution_time', 300);
+        
         if (!is_array($docs)) {
             return;
         }
@@ -29,9 +31,11 @@ class indexer {
                 $terms_table[] = array("term" => strtolower($term), "docid" => $docid , "offset" => $offset );
             }
         }
-
+        
+        
         $terms_table_sorted = $this->sort_terms($terms_table);
 
+        
         $index = array();
         $prev_row["term"] = "";
         $prev_row["docid"] = "";
@@ -45,10 +49,12 @@ class indexer {
             }
             $prev_row = $row;
         }
+        
 
         foreach ($index as $term => $row) {
             $this->index->save_documents($term,$row["hits"],$row["posting"]);
         }
+        
     }
 
     function sort_terms(array $terms_table) {

@@ -11,14 +11,13 @@ if (isset($_POST["remove"]) && ($_POST["remove"] == "remove")) {
         $storage = new storage();
         $index = new index();
         $indexer = new indexer($index, $storage);
-
         $storage->remove_docs($_POST["docs"]);
     }
 }
 
 function get_documents() {
     global $conn;
-    $sql = "SELECT `docid`, `title`, `author`, `year` FROM `se_documents` WHERE `exist` = 1";
+    $sql = "SELECT * FROM `se_documents` WHERE `exist` = 1";
 
     return $conn->query($sql);
 }
@@ -42,6 +41,7 @@ function get_documents() {
         <div>
             <?php $results = get_documents(); ?>
             <h1>remove results</h1>
+                    <?php if ($results->num_rows > 0): ?>
             <form action="" method="post">
                 <table>
                     <thead>
@@ -53,7 +53,6 @@ function get_documents() {
                         </tr>
                     </thead>
 
-                    <?php if ($results->num_rows > 0): ?>
                         <tbody>
                             <?php while ($row = $results->fetch_assoc()): ?>
                                 <tr>
@@ -64,11 +63,13 @@ function get_documents() {
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
-                    <?php endif; ?>
                 </table>
-                <input type="submit" value="remove this items" />
-                <input type="hidden" value="remove" name="remove" />
-            </form>
+                    <input type="submit" value="remove this items" />
+                    <input type="hidden" value="remove" name="remove" />
+                </form>
+            <?php else: ?>
+            <p>no documents</p>
+                    <?php endif; ?>
         </div>
     </body>
 </html>

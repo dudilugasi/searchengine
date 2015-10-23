@@ -13,4 +13,4 @@ $conn->query("TRUNCATE `se_documents`");
 $conn->query("TRUNCATE `se_index`");
 
 
-copy("./doc1.txt", './source/doc1.txt');
+

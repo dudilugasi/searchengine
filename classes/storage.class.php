@@ -14,23 +14,28 @@ class storage {
         fwrite($fp, serialize($document));
         fclose($fp);
 
+        $title = isset($document["title"]) ? $document["title"] : "";
+        $chapter_name = isset($document["name"]) ? $document["name"] : "";
+        $chapter_num = isset($document["chapter"]) ? $document["chapter"] : "";
         $sql = "INSERT INTO "
                 . "`se_documents` "
-                . "(`docid`, `title`, `author`, `year`) "
+                . "(`docid`, `title`, `chapter_name`, `chapter_num`) "
                 . "VALUES"
                 . " ('" .
                 $conn->real_escape_string($docid) . "', '"
-                . $conn->real_escape_string($document["title"]) . "', '"
-                . $conn->real_escape_string($document["author"]) . "', '"
-                . $conn->real_escape_string($document["year"]) . "');";
+                . $conn->real_escape_string($title) . "', '"
+                . $conn->real_escape_string($chapter_name) . "', '"
+                . $conn->real_escape_string($chapter_num) . "');";
         $conn->query($sql);
         return $docid;
     }
 
     function get_document($docid) {
+        global $conn;
         if (!is_integer($docid) || $docid < 0) {
             return null;
         }
+        
         $file_name = STORAGE_DIR . $docid . '.txt';
         if (!file_exists($file_name)) {
             return null;
