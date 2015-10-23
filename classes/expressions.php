@@ -61,7 +61,10 @@ class orEx extends expression {
     }
 
     public function evaluate() {
-        return array_merge($this->left->evaluate(), $this->right->evaluate());
+        $l = $this->left->evaluate();
+        $r = $this->right->evaluate();
+        $merged = $l + $r;
+        return $merged;
     }
 
 }
