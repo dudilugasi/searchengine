@@ -7,7 +7,7 @@ abstract class expression {
 
 class leaf extends expression {
 
-    private $posting;
+    private $term;
 
     public function __construct($term) {
         $this->term = $term;
@@ -44,7 +44,7 @@ class andEx extends expression {
     }
 
     public function evaluate() {
-        return array_intersect_key($this->left->evaluate(), $this->right->evaluate());
+        return array_intersect_key($this->left->evaluate()["posting"], $this->right->evaluate()["posting"]);
     }
 
 }

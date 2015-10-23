@@ -13,23 +13,26 @@ $parser = new parser();
 $index = new index();
 
 $temp_index = array();
-$tokens = array("admits","and","also");
+$tokens = array("(","a","and","b",")","and","(","not","c",")");
+//$tokens = array("admits","and","also");
 $tokens_rpn = $parser->infix_to_rpn($tokens);
 
 foreach ($tokens_rpn as $token) {
     if (!in_array($token, $parser::operators_dictionary)) {
-        $temp_index[$token] = $index->get_documents($token);
+        $temp_index[] = array("term" => $token,"posting" => $index->get_documents($token));
     }
     else {
-        $temp_index[$token] = false;
+        $temp_index[] = array("term" => $token,"posting" => null );
     }
 }
-
+print_r($temp_index);
 $root = $parser->create_tree(new ArrayIterator($temp_index));
 
-$result = $root->evaluate();
+print_r($root);
 
-print_r($result);
+//$result = $root->evaluate();
+
+//print_r($result);
 
 
 

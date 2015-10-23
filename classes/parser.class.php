@@ -51,29 +51,30 @@ class parser {
         return array_reverse($reversed_q);
     }
 
-    static function create_tree(ArrayIterator $it) {
+    static function create_tree(ArrayIterator &$it) {
 
-        if (!in_array($it->key(), self::operators_dictionary)) {
-            $leaf =  new leaf($it->current());
+        if (!in_array($it->current()["term"], self::operators_dictionary)) {
+            $leaf = new leaf($it->current());
             $it->next();
             return $leaf;
         } else {
-            if ($it->key() == "not") {
+            if ($it->current()["term"] == "not") {
                 $it->next();
-                $op =  self::create_tree($it);
+
+                $op = self::create_tree($it);
                 return new notEx($op);
-            }
-            else if ($it->key() == "and") {
+            } else if ($it->current()["term"] == "and") {
                 $it->next();
-                $left =  self::create_tree($it);
-                $right =  self::create_tree($it);
-                return new andEx($left,$right);
-            }
-            else if ($it->key() == "or") {
+
+                $left = self::create_tree($it);
+                $right = self::create_tree($it);
+                return new andEx($left, $right);
+            } else if ($it->current()["term"] == "or") {
                 $it->next();
-                $left =  self::create_tree($it);
-                $right =  self::create_tree($it);
-                return new orEx($left,$right);
+
+                $left = self::create_tree($it);
+                $right = self::create_tree($it);
+                return new orEx($left, $right);
             }
         }
         return null;
