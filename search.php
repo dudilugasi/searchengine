@@ -7,8 +7,13 @@ include_once 'classes/search.class.php';
 $results = array();
 
 if (isset($_GET["search"])) {
+    $index = new index();
+    $storage = new storage();
     $search = new search($index, $storage);
     $results = $search->search_documents($_GET["search"]);
+    
+
+    
 }
 
 ?>
@@ -32,7 +37,7 @@ if (isset($_GET["search"])) {
                 <?php foreach ($results as $result): ?>
                     <?php if ($result["exist"] == 1): ?>
                         <section class="result">
-                            <h1><a href="single-document.php?doc=<?php echo $result["id"] ?>">
+                            <h1><a href="single-document.php?doc=<?php echo $result["docid"] ?>">
                                     <?php echo $result["chapter_name"] . " ( chapter number: " . $result["chapter_num"] . " )" ?>
                                 </a></h1>
                         </section>

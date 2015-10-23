@@ -7,10 +7,11 @@ class search {
 
     public $index = null;
     public $storage = null;
-
+    public $parser = null;
     function __construct(index $index, storage $storage) {
         $this->index = $index;
         $this->storage = $storage;
+        $this->parser = new parser();
     }
 
     function search_documents($search_query) {
@@ -18,14 +19,14 @@ class search {
         $temp_index = array();
         $tokens = explode(" ", $search_query);
 
-        foreach ($tokens as $token) {
-            strtolower($token);
+        foreach ($tokens as $key => $token) {
+            $tokens[$key] = strtolower($token);
         }
 
         $tokens_rpn = $this->parser->infix_to_rpn($tokens);
 
         foreach ($tokens_rpn as $token) {
-            if (!in_array($token, $parser::operators_dictionary)) {
+            if (!in_array($token, parser::operators_dictionary)) {
                 $temp_index[] = array("term" => $token, "posting" => $this->index->get_documents($token));
             } else {
                 $temp_index[] = array("term" => $token, "posting" => null);
@@ -38,14 +39,15 @@ class search {
         
         $root = $this->parser->create_tree(new ArrayIterator($temp_index));
 
-        if (!is_null($root)) {
+        if (is_null($root)) {
             return array();
         }
         
         $result = $root->evaluate();
+        
 
-        foreach ($result as $docid) {
-            $docs[] = $this->storage->get_document($docid);
+        foreach ($result as $docid => $offset) {
+            $docs[] = $this->storage->get_document_meta($docid);
         }
         
         return $docs;

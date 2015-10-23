@@ -55,6 +55,8 @@ class indexer {
             $this->index->save_documents($term,$row["hits"],$row["posting"]);
         }
         
+        $this->index->store_index();
+        
     }
 
     function sort_terms(array $terms_table) {

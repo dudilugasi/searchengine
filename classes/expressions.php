@@ -14,7 +14,7 @@ class leaf extends expression {
     }
 
     public function evaluate() {
-        return $this->term;
+        return $this->term["posting"];
     }
 
 }
@@ -29,7 +29,7 @@ class notEx extends expression {
 
     public function evaluate() {
         global $all_docs;
-        return array_diff($all_docs, $this->op->evaluate()["posting"]);
+        return array_diff($all_docs, $this->op->evaluate());
     }
 
 }
@@ -45,7 +45,7 @@ class andEx extends expression {
     }
 
     public function evaluate() {
-        return array_intersect_key($this->left->evaluate()["posting"], $this->right->evaluate()["posting"]);
+        return array_intersect_key($this->left->evaluate(), $this->right->evaluate());
     }
 
 }

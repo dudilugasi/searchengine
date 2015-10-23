@@ -1,7 +1,7 @@
-#title = A Feast For Crows
-#name = the captain of the guards
-#chapter = 1
-
+a:4:{s:5:"title";s:19:"A Feast For Crows
+";s:4:"name";s:27:"the captain of the guards
+";s:7:"chapter";s:3:"1
+";s:7:"content";s:38315:"
 THE CAPTAIN OF GUARDS
  
 The blood oranges are well past ripe," the prince observed in a weary voice, when the captain rolled him onto the terrace.
@@ -346,4 +346,4 @@ The prince considered. "Ellaria's girls are too young to be a danger, but there 
  
 "It will be done." The captain hesitated. "When this is known in the streets, the common folk will howl."
  
-"All Dorne will howl," said Doran Martell in a tired voice. "I only pray Lord Tywin hears them in King's Landing, so he might know what a loyal friend he has in Sunspear."
+"All Dorne will howl," said Doran Martell in a tired voice. "I only pray Lord Tywin hears them in King's Landing, so he might know what a loyal friend he has in Sunspear."";}

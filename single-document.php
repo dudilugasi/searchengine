@@ -1,18 +1,20 @@
 <?php
-
 include_once 'connect.php';
 include_once 'classes/storage.class.php';
 
-if (isset($_GET["docid"])) {
-    $storage = new $storage();
-    
-    $docid = $_GET["docid"];
-    
-    $document = $storage->get_document($docid);
-    
-    
-}
 
+$document = false;
+if (isset($_GET["doc"])) {
+    $storage = new storage();
+
+    $docid = is_numeric($_GET["doc"]) ? intval($_GET["doc"]) : null;
+
+    if (!is_null($docid)) {
+        $document = $storage->get_document($docid);
+    }
+
+    //print_r($document);
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,17 +25,12 @@ if (isset($_GET["docid"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="search_bar">
-            <form action="search.php" method="get">
-                <input type="text" name="search" />
-                <input type="submit">
-            </form>
-        </div>
         <section>
             <?php if ($document): ?>
-            <h1><?php echo $document[1] ." ( year: " . $document[4] . " )" ?></h1>
-            <h2>Author: <?php echo $document[2] ?></h2>
-            <?php echo $document[0] ?>
+                <h1><?php echo $document["title"] . " ( chapter number: " . $document["chapter"] . " )" ?></h1>
+                <div class="contet">
+                    <?php echo nl2br($document["content"]) ?>
+                </div>
             <?php endif; ?>
         </section>
     </body>

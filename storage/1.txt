@@ -1,7 +1,7 @@
-#title = A Clash Of Kings
-#name = tyrion vii
-#chapter = 54
-
+a:4:{s:5:"title";s:18:"A Clash Of Kings
+";s:4:"name";s:12:"tyrion vii
+";s:7:"chapter";s:4:"54
+";s:7:"content";s:18050:"
 TYRION
  
 Pod dressed him for his ordeal in a plush velvet tunic of Lannister crimson and brought him his chain of office. Tyrion left it on the bedside table. His sister misliked being reminded that he was the King's Hand, and he did not wish to inflame the relations between them any further.
@@ -228,4 +228,4 @@ After a few moments he stopped her. "What's wrong?" she asked. All the sweet inn
  
 Innocence? Fool, she's a whore, Cersei was right, you think with your cock, fool, fool.
  
-"Just go to sleep, sweetling," he urged, stroking her hair. Yet long after Shae had taken his advice, Tyrion himself still lay awake, his fingers cupped over one small breast as he listened to her breathing.
+"Just go to sleep, sweetling," he urged, stroking her hair. Yet long after Shae had taken his advice, Tyrion himself still lay awake, his fingers cupped over one small breast as he listened to her breathing.";}

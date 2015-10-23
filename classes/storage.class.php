@@ -31,17 +31,31 @@ class storage {
     }
 
     function get_document($docid) {
-        global $conn;
         if (!is_integer($docid) || $docid < 0) {
             return null;
         }
-        
+
         $file_name = STORAGE_DIR . $docid . '.txt';
         if (!file_exists($file_name)) {
             return null;
         }
         $content = file_get_contents($file_name);
         return unserialize($content);
+    }
+
+    function get_document_meta($docid) {
+        global $conn;
+        
+        if (!is_integer($docid) || $docid < 0) {
+            return null;
+        }
+        
+        $sql = "SELECT * FROM `se_documents` WHERE `docid` = $docid";
+        
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+        
     }
 
     function get_doc_id() {
