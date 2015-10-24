@@ -43,7 +43,7 @@ class storage {
         return unserialize($content);
     }
 
-    function get_document_meta($docid) {
+    function get_document_meta($docid,$offset = 0) {
         global $conn;
         
         if (!is_integer($docid) || $docid < 0) {
@@ -54,6 +54,14 @@ class storage {
         
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
+        
+        $document = $this->get_document($docid);
+        
+        $content = $document["content"];
+        
+        $offset =  ($offset - 300 < 0) ? 0 : $offset - 300;
+            
+        $row["excerpt"] = substr($content, $offset , 300);
         return $row;
         
     }

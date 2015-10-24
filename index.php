@@ -13,7 +13,6 @@ if (isset($_GET["search"])) {
     $search = new search($index, $storage);
     $results = $search->search_documents($_GET["search"]);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -38,13 +37,14 @@ if (isset($_GET["search"])) {
                             <h1><a href="single-document.php?doc=<?php echo $result["docid"] ?>">
                                     <?php echo $result["chapter_name"] . " ( chapter number: " . $result["chapter_num"] . " )" ?>
                                 </a></h1>
+                            <p class="excerpt"><?php echo nl2br($result["excerpt"]) ?></p>
                         </section>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php else: ?>
-            <p>
-                <?php echo $message; ?>
-            </p>
+                <p>
+                    <?php echo $message; ?>
+                </p>
             <?php endif; ?>
 
         </div>
