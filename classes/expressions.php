@@ -29,7 +29,9 @@ class notEx extends expression {
 
     public function evaluate() {
         global $all_docs;
-        return array_diff($all_docs, $this->op->evaluate());
+        $docs = $this->op->evaluate();
+        $diff = array_diff_key($all_docs, $docs);
+        return $diff;
     }
 
 }
@@ -45,7 +47,10 @@ class andEx extends expression {
     }
 
     public function evaluate() {
-        return array_intersect_key($this->left->evaluate(), $this->right->evaluate());
+        $l = $this->left->evaluate();
+        $r = $this->right->evaluate();
+        $intersect = array_intersect_key($l,$r);
+        return $intersect;
     }
 
 }

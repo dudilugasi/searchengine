@@ -18,6 +18,8 @@ class search {
 
     function search_documents($search_query) {
         global $stopwords;
+        global $all_docs;
+        $all_docs = $this->index->get_documents_ids();
         $docs = array();
         $temp_index = array();
         $tokens = explode(" ", $search_query);
