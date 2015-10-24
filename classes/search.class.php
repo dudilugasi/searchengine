@@ -23,17 +23,19 @@ class search {
         $docs = array();
         $temp_index = array();
         $tokens = explode(" ", $search_query);
-        
+
         $temp_tokens = array();
         foreach ($tokens as $token) {
-            if (substr($token,-1) == "*") {
+            if (substr($token, -1) == "*") {
                 $jokers = $this->get_joker($token);
                 foreach ($jokers as $value) {
                     $temp_tokens[] = $value;
                 }
-            }
-            else {
-                $temp_tokens[] = $token;
+            } else {
+                $synonyms = $this->get_synonyms($token);
+                foreach ($synonyms as $value) {
+                    $temp_tokens[] = $value;
+                }
             }
         }
 
@@ -48,7 +50,6 @@ class search {
                     unset($tokens[$key]);
                     continue;
                 }
-                
             } else {
                 $token = substr($token, 1, -1);
             }
@@ -102,18 +103,62 @@ class search {
     function get_joker($term) {
         global $conn;
         $terms = array();
-        
-        $term = substr($term,0, -1);
+
+        $term = substr($term, 0, -1);
         $sql = "SELECT term FROM `se_index` WHERE `term` LIKE '$term%'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
-                 $terms[] = $row["term"]; 
+                $terms[] = $row["term"];
             }
         }
         $terms[] = $term;
-        return explode(" ",implode(" or ", $terms));
+        $terms =  explode(" ", implode(" or ", $terms));
+        array_unshift($terms, "(");
+        $terms[] = ")";
+        
+        return $terms;
+    }
+
+    //returns thre synonyms of a term
+    function get_synonyms($term) {
+        $synonyms = array();
+        $apikey = "zQSlnuU9epzy9qUtH92f"; // NOTE: replace test_only with your own key 
+        $word = $term; // any word 
+        $language = "en_US"; // you can use: en_US, es_ES, de_DE, fr_FR, it_IT 
+        $endpoint = "http://thesaurus.altervista.org/thesaurus/v1";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$endpoint?word=" . urlencode($word) . "&language=$language&key=$apikey&output=json");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        $info = curl_getinfo($ch);
+        curl_close($ch);
+
+        if ($info['http_code'] == 200) {
+            $result = json_decode($data, true);
+            foreach ($result["response"] as $value) {
+                foreach (explode("|", $value["list"]["synonyms"]) as $synonym) {
+                    $synonyms[] = $synonym;
+                }
+            }
+        }
+
+
+        foreach ($synonyms as $key => $word) {
+            if (preg_match('/\s/', $word)) {
+                unset($synonyms[$key]);
+            }
+        }
+
+        $synonyms = array_slice($synonyms, 0, 3);
+        $synonyms[] = $term;
+        $synonyms =  explode(" ", implode(" or ", $synonyms));
+        array_unshift($synonyms, "(");
+        $synonyms[] = ")";
+        
+        return $synonyms;
     }
 
 }
