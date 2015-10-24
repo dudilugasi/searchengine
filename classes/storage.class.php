@@ -61,7 +61,7 @@ class storage {
         
         $offset =  ($offset - 300 < 0) ? 0 : $offset - 300;
             
-        $row["excerpt"] = substr($content, $offset , 300);
+        $row["excerpt"] = substr($content, $offset , 600);
         return $row;
         
     }

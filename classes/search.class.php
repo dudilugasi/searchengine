@@ -62,9 +62,11 @@ class search {
 
         $result = $root->evaluate();
 
-
+        $tokens = array_diff($tokens, parser::operators_dictionary);
+        
+        
         foreach ($result as $docid => $offset) {
-            $docs[$docid] = $this->storage->get_document_meta($docid);
+            $docs[$docid] = $this->storage->get_document_meta($docid,$offset);
             foreach ($tokens as $token) {
                 $docs[$docid]["excerpt"] = $this->highlight($docs[$docid]["excerpt"], $token);
             }
