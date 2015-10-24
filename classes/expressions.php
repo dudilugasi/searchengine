@@ -14,7 +14,7 @@ class leaf extends expression {
     }
 
     public function evaluate() {
-        return $this->term["docs"];
+        return $this->term["posting"];
     }
 
 }
