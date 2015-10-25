@@ -31,24 +31,28 @@ function get_documents() {
         <title>admin</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-    <body>
+    <body class='admin'>
         <div>
             <h1>add new sources</h1>
+            <p>this will index all the document inside the source folder</p>
             <button><a href="get_sources.php">add now!</a></button>
         </div>
 
         <div>
             <?php $results = get_documents(); ?>
             <h1>remove results</h1>
+            <p>check the document you wish to remove and press "remove this items"</p>
                     <?php if ($results->num_rows > 0): ?>
             <form action="" method="post">
-                <table>
+                <table cellspacing="10">
                     <thead>
                         <tr>
                             <th>book</th>
-                            <th>author</th>
-                            <th>year</th>
+                            <th>chapter name</th>
+                            <th>chapter number</th>
                             <th>remove</th>
                         </tr>
                     </thead>
@@ -57,8 +61,8 @@ function get_documents() {
                             <?php while ($row = $results->fetch_assoc()): ?>
                                 <tr>
                                     <td><?php echo $row["title"] ?></td>
-                                    <td><?php echo $row["author"] ?></td>
-                                    <td><?php echo $row["year"] ?></td>
+                                    <td><?php echo $row["chapter_name"] ?></td>
+                                    <td><?php echo $row["chapter_num"] ?></td>
                                     <td><input type="checkbox" name="docs[]" value="<?php echo $row["docid"] ?>"/></td>
                                 </tr>
                             <?php endwhile; ?>

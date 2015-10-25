@@ -23,12 +23,14 @@ if (isset($_GET["doc"])) {
         <title>search</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <section>
+        <section class='single-document'>
             <?php if ($document): ?>
-                <h1><?php echo $document["title"] . " ( chapter number: " . $document["chapter"] . " )" ?></h1>
-                <div class="contet">
+                <h1 class='entry-header'><?php echo $document["title"] . " ( chapter number: " . $document["chapter"] . " )" ?></h1>
+                <div class="content">
                     <?php echo nl2br($document["content"]) ?>
                 </div>
             <?php endif; ?>
